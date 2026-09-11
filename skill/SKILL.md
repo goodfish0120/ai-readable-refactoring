@@ -1,6 +1,6 @@
 ---
 name: ai-readable-refactoring
-description: Refactor already-working code into a form that future humans and coding agents can understand, search, trace, extend, and verify. Use after implementation when behavior is testable; apply one readability concern per pass and load only the matching language profile.
+description: Refactor already-working code into a form that future humans and coding agents can understand, search, trace, extend, and verify. Use after implementation when behavior is testable; apply one dominant readability concern per pass and load only the minimum necessary language profiles.
 ---
 
 # Refactor Code for AI Readability
@@ -11,17 +11,20 @@ Use this skill after a working implementation exists and relevant behavior is te
 
 Reduce reconstruction cost for future human and AI readers while preserving behavior.
 
-The code should make workflow, causality, state ownership, side effects, dependency intent, and abstraction boundaries recoverable without loading the whole repository.
+Protect reading continuity: code should let a reader follow the current line of thought without repeated detours to reconstruct workflow, causality, state ownership, side effects, dependency intent, or abstraction boundaries.
 
 ## Load rules progressively
 
 1. Read `CORE_RULES.md`.
-2. Detect the language of the code being refactored.
-3. Read only the matching file under `profiles/`.
-4. Read the repository's project profile if one exists.
-5. Read `REFACTORING_WORKFLOW.md`.
+2. Read `RULE_FAMILIES.md` and identify the primary reason for the current refactor.
+3. Detect the language and ecosystem of the code being refactored.
+4. Read the minimum necessary profile set under `profiles/`.
+5. Read the repository's project profile if one exists.
+6. Read `REFACTORING_WORKFLOW.md`.
 
-For frontend framework code, load:
+Most work needs one primary language profile. Add companion profiles only when the code genuinely crosses a language or ecosystem boundary, or when the primary profile explicitly points to them.
+
+For frontend framework code, for example, load:
 
 ```text
 profiles/javascript-typescript.md
@@ -33,22 +36,26 @@ Do not load unrelated language profiles.
 
 ## Work sequentially
 
-Choose one concern for the current pass. Typical concerns are:
+Choose one primary rule family and one dominant concern for the current pass.
+
+Typical concerns are:
 
 ```text
+reading continuity
 searchable naming
+structural placement
 abstraction height
 state ownership
 type/domain meaning
 side-effect visibility
-hidden control flow
+control-flow visibility
 dependency boundaries
 narrative bridges
 language-specific hazards
 project-specific hazards
 ```
 
-Refactor only that concern in the smallest coherent region.
+Refactor the smallest coherent region that resolves that concern. Coupled edits may move together when they are necessary to complete the same change.
 
 Run relevant tests after the pass. Inspect the diff for accidental behavior changes. Checkpoint the pass independently before moving to another concern.
 
@@ -60,7 +67,7 @@ When a pass exposes suspicious behavior, stop structural expansion around that i
 
 ## Do not optimize for short code
 
-Extra lines are justified when they preserve causality, ownership, intent, lifecycle, external constraints, or dependency boundaries.
+Extra lines are justified when they preserve causality, ownership, intent, lifecycle, external constraints, dependency boundaries, or reading continuity.
 
 Ordinary local mechanics should remain concise.
 
@@ -74,6 +81,7 @@ Examples:
 A clear C `goto cleanup` may improve ownership visibility.
 A small Python comprehension may be clearer than three helper functions.
 An idiomatic frontend effect may be appropriate when trigger, consequence, and cleanup are obvious.
+A single-use method may be valuable when it names a workflow stage or preserves abstraction height.
 ```
 
 Optimize reconstruction cost, not stylistic uniformity for its own sake.
@@ -83,6 +91,7 @@ Optimize reconstruction cost, not stylistic uniformity for its own sake.
 Keep the report compact:
 
 ```text
+Rule family:
 Pass:
 Files changed:
 Semantic friction removed:
