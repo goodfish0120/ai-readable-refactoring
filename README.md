@@ -13,6 +13,8 @@ let the implementation model solve the problem freely
 
 This repository treats source code as part of the collaboration interface between the current author and future readers. Good code should let a cold-start reader recover the workflow, causality, state ownership, dependency boundaries, and next place to inspect without reconstructing the whole repository.
 
+A clean codebase also acts as local precedent: future coding agents tend to continue the grammar, naming, layering, and explicitness already visible nearby.
+
 ## Core shape
 
 ```text
@@ -70,19 +72,49 @@ CORE_RULES.md
 + a small project-specific profile when necessary
 ```
 
-Do not load every language rule into every refactor.
+Frontend framework work may load more than one related profile because language, markup/style, and reactive runtime have distinct hazards.
+
+Do not load unrelated language rules into a refactor.
 
 ## Repository map
 
 - `CORE_RULES.md` — language-independent readability and traceability rules.
 - `REFACTORING_WORKFLOW.md` — the sequential pass protocol and acceptance criteria.
+- `skill/SKILL.md` — agent-facing instructions for applying the method progressively.
 - `profiles/python.md` — Python-specific semantic hazards.
 - `profiles/java.md` — Java-specific semantic hazards.
 - `profiles/kotlin.md` — Kotlin-specific semantic hazards.
 - `profiles/csharp.md` — C#-specific semantic hazards.
 - `profiles/c.md` — C-specific ownership and memory hazards.
 - `profiles/cpp.md` — C++-specific lifetime and abstraction hazards.
+- `profiles/javascript-typescript.md` — JavaScript/TypeScript async, event, dynamic-state, and module hazards.
+- `profiles/html-css.md` — markup semantics, DOM identity, CSS ownership, and UI-state visibility.
+- `profiles/frontend-frameworks.md` — React/Vue/Svelte/Angular-style reactive state, effects, lifecycle, and server/client boundaries.
 - `PROJECT_PROFILE_TEMPLATE.md` — a small template for repository-local rules.
+- `INFLUENCES.md` — external work and industry practices that informed this method.
+
+## Using the skill
+
+For ordinary code:
+
+```text
+CORE_RULES
++ matching language profile
++ optional project profile
++ one refactoring concern
+```
+
+For a TypeScript frontend, for example:
+
+```text
+CORE_RULES
++ javascript-typescript
++ html-css when markup/styles are in scope
++ frontend-frameworks when reactive lifecycle/state is in scope
++ project profile
+```
+
+The implementation pass and readability pass are deliberately separate. The first optimizes for solving the problem. The second reshapes the working result into a form that future agents can safely continue.
 
 ## Design target
 
