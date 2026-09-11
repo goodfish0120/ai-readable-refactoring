@@ -1,3 +1,8 @@
+---
+name: ai-readable-refactoring
+description: Refactor already-working code into a form that future humans and coding agents can understand, search, trace, extend, and verify. Use after implementation when behavior is testable; apply one readability concern per pass and load only the matching language profile.
+---
+
 # Refactor Code for AI Readability
 
 Use this skill after a working implementation exists and relevant behavior is testable.
