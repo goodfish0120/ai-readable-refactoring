@@ -1,6 +1,16 @@
 # Core Rules
 
-These rules are language-independent. Load exactly one language profile beside them, then add a small project profile only when the repository has domain-specific hazards.
+These rules are language-independent. Load the minimum necessary language profile set beside them, then add a small project profile only when the repository has domain-specific hazards.
+
+`RULE_FAMILIES.md` explains why the rules exist. Language profiles explain where each language or ecosystem commonly breaks those goals.
+
+## Reading continuity
+
+Optimize for reading continuity.
+
+A reader should be able to follow the current line of thought through the code without repeatedly leaving it to reconstruct naming, ownership, causality, hidden control flow, dependency intent, or workflow position.
+
+The purpose of the rules below is to reduce those interruptions while preserving ordinary language idioms.
 
 ## Recoverable causality
 
@@ -46,6 +56,12 @@ Avoid generic names such as `process`, `handle`, `manage`, `helper`, `utils`, `c
 
 Runtime identities that appear in logs, errors, events, protocols, or persisted state should remain searchable back to source. Avoid dynamic string construction when it destroys this property.
 
+## Structural placement
+
+Important logic should live under a discoverable owner and in a location that matches its responsibility.
+
+Inspect files or modules that accumulate unrelated behavior under names such as `utils`, `common`, `helpers`, or `manager`. The goal is not arbitrary file-size reduction. The goal is that a reader can predict where a concept lives and why it lives there.
+
 ## Textbook-style semantic layering
 
 Code should reveal intent in this order:
@@ -73,6 +89,14 @@ what runs
 what is observed
 what is returned or written
 ```
+
+## Single-use structural methods
+
+Call frequency does not determine abstraction value.
+
+A method with one caller can be valuable when it names a workflow stage, preserves abstraction height, localizes one responsibility, or lets the caller express the system structure directly.
+
+Do not extract a one-off helper merely to shorten a function. The extraction should add semantic structure that helps the reader continue the current line of thought.
 
 ## Narrative bridges
 
