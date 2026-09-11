@@ -15,6 +15,14 @@ This repository treats source code as part of the collaboration interface betwee
 
 A clean codebase also acts as local precedent: future coding agents tend to continue the grammar, naming, layering, and explicitness already visible nearby.
 
+## Core philosophy
+
+Protect reading continuity.
+
+A reader should be able to follow the current line of thought through the code without repeatedly leaving it to reconstruct hidden context, ownership, causality, naming, or dependency intent.
+
+Different rule families serve different purposes. `RULE_FAMILIES.md` separates those philosophies. Language profiles then describe where a specific language or ecosystem commonly breaks them.
+
 ## Core shape
 
 ```text
@@ -28,7 +36,7 @@ High-level code should read like a conceptual map. Lower layers add one level of
 
 ## Operating rule
 
-Refactor one concern per pass.
+Refactor one dominant concern per pass.
 
 ```text
 naming
@@ -60,7 +68,7 @@ language-specific hazards
 -> inspect diff
 ```
 
-The order can change when a repository has an obvious blocking problem. The single-concern-per-pass rule stays.
+The order can change when a repository has an obvious blocking problem. Keep one dominant cause per pass. Coupled edits that are necessary to complete the same coherent change may move together.
 
 ## Rule layers
 
@@ -68,17 +76,21 @@ Apply only what the current code needs:
 
 ```text
 CORE_RULES.md
-+ one language profile from profiles/
++ RULE_FAMILIES.md
++ the minimum necessary language profile set from profiles/
 + a small project-specific profile when necessary
 ```
 
-Frontend framework work may load more than one related profile because language, markup/style, and reactive runtime have distinct hazards.
+Most work needs one primary language profile. Companion profiles are loaded only when the code genuinely crosses a language/ecosystem boundary or the primary profile explicitly depends on them.
+
+Examples include C++ with C lifetime concerns, Kotlin with JVM framework concerns, and frontend framework work with JavaScript/TypeScript plus markup/style rules.
 
 Do not load unrelated language rules into a refactor.
 
 ## Repository map
 
 - `CORE_RULES.md` — language-independent readability and traceability rules.
+- `RULE_FAMILIES.md` — the distinct purposes and philosophies behind the rules.
 - `REFACTORING_WORKFLOW.md` — the sequential pass protocol and acceptance criteria.
 - `skill/SKILL.md` — agent-facing instructions for applying the method progressively.
 - `profiles/python.md` — Python-specific semantic hazards.
@@ -99,15 +111,17 @@ For ordinary code:
 
 ```text
 CORE_RULES
++ RULE_FAMILIES
 + matching language profile
 + optional project profile
-+ one refactoring concern
++ one dominant refactoring concern
 ```
 
 For a TypeScript frontend, for example:
 
 ```text
 CORE_RULES
++ RULE_FAMILIES
 + javascript-typescript
 + html-css when markup/styles are in scope
 + frontend-frameworks when reactive lifecycle/state is in scope
@@ -121,6 +135,7 @@ The implementation pass and readability pass are deliberately separate. The firs
 The goal is not maximum verbosity. The goal is minimum reconstruction cost with recoverable:
 
 ```text
+reading path
 causality
 ownership
 intent
