@@ -62,6 +62,14 @@ Important logic should live under a discoverable owner and in a location that ma
 
 Inspect files or modules that accumulate unrelated behavior under names such as `utils`, `common`, `helpers`, or `manager`. The goal is not arbitrary file-size reduction. The goal is that a reader can predict where a concept lives and why it lives there.
 
+## Shared semantics, local policy
+
+Consolidate repeated logic when it expresses the same stable semantic contract under an identifiable owner. Similar syntax alone is not enough. A shared predicate or mechanism should let readers trust its name instead of comparing several implementations.
+
+Keep boundary-specific policy visible: admission, error mapping, fallback, provenance, and effect ordering may differ even when the underlying check is shared. Preserve existing compatibility or dispatch seams where consumers depend on them. Use a domain-specific name and an intentional export for a cross-module contract; avoid turning a private generic helper into an accidental shared interface.
+
+Leave small local repetition in place when sharing would add coupling or reader detours without clarifying a common contract.
+
 ## Textbook-style semantic layering
 
 Code should reveal intent in this order:

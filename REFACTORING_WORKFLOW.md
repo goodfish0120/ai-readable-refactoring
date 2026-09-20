@@ -65,6 +65,26 @@ Large files may require several passes of the same concern.
 
 Do not widen scope merely because adjacent code also looks untidy.
 
+## Boundary-focused verification
+
+Verify the supported positive path through the real consumer, together with cases that would falsify the preserved promise. For a small multi-field contract, vary each independently meaningful field; for a large input space, choose justified boundary classes rather than an unbounded matrix.
+
+Check observable error mapping, evaluation order, short-circuit behavior, dispatch seams, and whether effects occur when those are part of the contract. Equivalent-looking expressions are equivalent only over the supported input types. Prefer assertions through the public boundary to tests that call only the newly extracted helper.
+
+## Navigation and evidence
+
+Route documentation tells readers where the owner, consumer, recovery path, and next detail live. Keep changing progress in one authoritative record; route pages link to it instead of repeating volatile status, counts, or receipts.
+
+Coverage names an exact scope and distinguishes reviewed, partially reviewed, and unresolved material without counting the same surface twice. A retained-with-reason result is useful work; an indexed filename is not a source review. Counts describe coverage, not completion. Absence of static callers does not establish that dynamic, CLI, compatibility, or recovery paths are obsolete.
+
+Measure production, tests, documents, archives, and generated material separately when reporting size changes. Moving history behind an archive route reduces default reading exposure, not necessarily total repository size.
+
+## Bounded handoffs and checkpoints
+
+Independent workers may own disjoint coherent regions. Each handoff states the intended reader benefit, owned paths, preserved behavior, exclusions, and return owner. Return the changed scope, base revision and hashes or equivalent evidence, checks and results, and unresolved risks.
+
+The receiving owner reconciles those results before claiming completion. Group coupled edits and amortize shared navigation or publication checks at a coherent batch boundary; each tiny helper does not need a separate administrative checkpoint. Keep individual changes recoverable and preserve the project's existing acceptance gates.
+
 ## Behavioral bugs discovered during refactoring
 
 Readability work often exposes latent behavioral bugs.
